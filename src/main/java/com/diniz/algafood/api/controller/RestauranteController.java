@@ -18,51 +18,51 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.diniz.algafood.domain.exception.EntidadeEmUsoException;
 import com.diniz.algafood.domain.exception.EntidadeNaoEncontradaException;
-import com.diniz.algafood.domain.model.Cozinha;
-import com.diniz.algafood.domain.service.CadastroCozinhaService;
+import com.diniz.algafood.domain.model.Restaurante;
+import com.diniz.algafood.domain.service.CadastroRestauranteService;
 
 @RestController
-@RequestMapping("/cozinhas")
-public class CozinhaController {
+@RequestMapping("/restaurantes")
+public class RestauranteController {
 	
 	@Autowired
-	private CadastroCozinhaService cadastroCozinha;
+	private CadastroRestauranteService cadastroRestaurante;
 	
 	@GetMapping
-	public List<Cozinha> listar() {
-		return cadastroCozinha.listar();
+	public List<Restaurante> listar() {
+		return cadastroRestaurante.listar();
 	}
 		
-	@GetMapping("/{cozinhaId}")
-	public ResponseEntity<Cozinha> buscar(@PathVariable Long cozinhaId) {
-		var cozinha = cadastroCozinha.buscar(cozinhaId);
+	@GetMapping("/{restauranteId}")
+	public ResponseEntity<Restaurante> buscar(@PathVariable Long restauranteId) {
+		var restaurante = cadastroRestaurante.buscar(restauranteId);
 		
-		if (cozinha != null) return ResponseEntity.ok(cozinha);
+		if (restaurante != null) return ResponseEntity.ok(restaurante);
 		
 		return ResponseEntity.notFound().build();
 	}
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Cozinha adicionar(@RequestBody Cozinha cozinha ) {
-		return cadastroCozinha.salvar(cozinha);
+	public Restaurante adicionar(@RequestBody Restaurante restaurante ) {
+		return cadastroRestaurante.salvar(restaurante);
 	}
 	
-	@PutMapping("/{cozinhaId}")
-	public ResponseEntity<Cozinha> atualizar(@PathVariable Long cozinhaId, @RequestBody Cozinha cozinha ) {
-		var cozinhaAtual = cadastroCozinha.buscar(cozinhaId);
+	@PutMapping("/{restauranteId}")
+	public ResponseEntity<Restaurante> atualizar(@PathVariable Long restauranteId, @RequestBody Restaurante restaurante ) {
+		var restauranteAtual = cadastroRestaurante.buscar(restauranteId);
 		
-		if(cozinhaAtual == null) return ResponseEntity.notFound().build();
+		if(restauranteAtual == null) return ResponseEntity.notFound().build();
 		
-		BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
-		return ResponseEntity.ok(cadastroCozinha.salvar(cozinhaAtual));
+		BeanUtils.copyProperties(restaurante, restauranteAtual, "id");
+		return ResponseEntity.ok(cadastroRestaurante.salvar(restauranteAtual));
 	}
 	
-	@DeleteMapping("/{cozinhaId}")
-	public ResponseEntity<Cozinha> remover(@PathVariable Long cozinhaId) {
+	@DeleteMapping("/{restauranteId}")
+	public ResponseEntity<Restaurante> remover(@PathVariable Long restauranteId) {
 		try {
 			
-			cadastroCozinha.excluir(cozinhaId);
+			cadastroRestaurante.excluir(restauranteId);
 			return ResponseEntity.noContent().build();
 			
 		} catch (EntidadeNaoEncontradaException e) {
