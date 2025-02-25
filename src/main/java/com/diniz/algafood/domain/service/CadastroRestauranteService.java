@@ -23,31 +23,29 @@ public class CadastroRestauranteService {
 	private CozinhaRepository cozinhaRepository;
 	
 	public Restaurante buscar(Long restauranteId) {
-		return restauranteRepository.buscar(restauranteId);
+		return restauranteRepository.findById(restauranteId).get();
 	}
 	
 	public List<Restaurante> listar() {
-		return restauranteRepository.listar();
+		return restauranteRepository.findAll();
 	}
 	
 	
 	public Restaurante salvar(Restaurante restaurante) {
 		var cozinhaId = restaurante.getCozinha().getId();
-		var cozinha = cozinhaRepository.buscar(cozinhaId);
-		if (cozinha == null) {
-			throw new EntidadeNaoEncontradaException(
-					String.format("Não existe cadastro de cozinha com código %d!", cozinhaId));
-		}
-		
+		var cozinha = cozinhaRepository.findById(cozinhaId)
+				.orElseThrow(() -> new EntidadeNaoEncontradaException(
+						String.format("Não existe cadastro de cozinha com código %d!", cozinhaId)));
+				
 		restaurante.setCozinha(cozinha);
 		
-		return restauranteRepository.salvar(restaurante);
+		return restauranteRepository.save(restaurante);
 	}
 	
 	
 	public void excluir(Long restauranteId) {
 		try {
-			restauranteRepository.remover(restauranteId);
+			restauranteRepository.deleteById(restauranteId);
 		} catch (EmptyResultDataAccessException e) {
 			throw new EntidadeNaoEncontradaException (
 					String.format("Não existe um cadastro de restaurante com código %d!", restauranteId));
