@@ -46,8 +46,10 @@ insert into forma_pagamento (descricao) values ('Dinheiro');
 insert into permissao (nome, descricao) values ('READ_RESTAURANTE', 'Consultar restaurantes');
 insert into permissao (nome, descricao) values ('WRITE_RESTAURANTE', 'Criar/Alterar restaurantes');
 insert into permissao (nome, descricao) values ('REMOVE_RESTAURANTE', 'Remover restaurantes');
-
 insert into permissao (nome, descricao) values ('READ_COZINHA', 'Consultar cozinhas');
 insert into permissao (nome, descricao) values ('WRITE_COZINHA', 'Criar/Alterar cozinhas');
 insert into permissao (nome, descricao) values ('REMOVE_COZINHA', 'Remover cozinhas');
+
+insert into restaurante_forma_pagamento (restaurante_id, forma_pagamento_id) values (1, 1), (1, 2), (1, 3), (1, 4), (1, 5); 
+
 
