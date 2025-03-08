@@ -69,7 +69,7 @@ public class RestauranteController {
 		if (cozinha == null) {
 			return ResponseEntity.badRequest().body("Cozinha não encontrada");
 		}
-		BeanUtils.copyProperties(restaurante, restauranteAtual, "id");
+		BeanUtils.copyProperties(restaurante, restauranteAtual, "id", "formasPagamento", "endereco");
 		return ResponseEntity.ok(cadastroRestaurante.salvar(restauranteAtual));
 	}
 	

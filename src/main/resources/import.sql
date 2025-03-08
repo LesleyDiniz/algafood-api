@@ -1,10 +1,6 @@
 insert into cozinha (nome) values ('Tailandesa');
 insert into cozinha (nome) values ('Indiana');
 
-insert into restaurante (nome, taxa_frete, cozinha_id) values ('Thai Gourmet', 10, 1);
-insert into restaurante (nome, taxa_frete, cozinha_id) values ('Thai Delivery', 9.50, 1);
-insert into restaurante (nome, taxa_frete, cozinha_id) values ('Tuk Tuk Comida Indiana', 15, 2);
-
 insert into estado (id, nome) values (1, 'Acre');
 insert into estado (id, nome) values (2, 'Alagoas');
 insert into estado (id, nome) values (3, 'Amapá');
@@ -45,11 +41,17 @@ insert into forma_pagamento (descricao) values ('Dinheiro');
 
 insert into permissao (nome, descricao) values ('READ_RESTAURANTE', 'Consultar restaurantes');
 insert into permissao (nome, descricao) values ('WRITE_RESTAURANTE', 'Criar/Alterar restaurantes');
-insert into permissao (nome, descricao) values ('REMOVE_RESTAURANTE', 'Remover restaurantes');
+insert into permissao (nome, descricao) values ('REMOVE_RESTAURANTE', 'Remover restaurantes'); 
 insert into permissao (nome, descricao) values ('READ_COZINHA', 'Consultar cozinhas');
 insert into permissao (nome, descricao) values ('WRITE_COZINHA', 'Criar/Alterar cozinhas');
 insert into permissao (nome, descricao) values ('REMOVE_COZINHA', 'Remover cozinhas');
 
+insert into restaurante (nome, taxa_frete, cozinha_id, endereco_cidade_id, endereco_bairro, endereco_cep, endereco_complemento, endereco_logradouro, endereco_numero) values ('Thai Gourmet', 10, 1, 1, 'Centro', '38400-000', 'Loja 1', 'Rua 1', '100');
+insert into restaurante (nome, taxa_frete, cozinha_id, endereco_cidade_id, endereco_bairro, endereco_cep, endereco_complemento, endereco_logradouro, endereco_numero) values ('Thai Delivery', 9.50, 1, 1, 'Centro', '38400-000', 'Loja 2', 'Rua 2', '200');
+insert into restaurante (nome, taxa_frete, cozinha_id, endereco_cidade_id, endereco_bairro, endereco_cep, endereco_complemento, endereco_logradouro, endereco_numero) values ('Tuk Tuk Comida Indiana', 15, 2, 2, 'Centro', '38400-000', 'Loja 3', 'Rua 3', '300'); 
+
 insert into restaurante_forma_pagamento (restaurante_id, forma_pagamento_id) values (1, 1), (1, 2), (1, 3), (1, 4), (1, 5); 
+insert into restaurante_forma_pagamento (restaurante_id, forma_pagamento_id) values (2, 1), (2, 2), (2, 4); 
+insert into restaurante_forma_pagamento (restaurante_id, forma_pagamento_id) values (3, 3), (3, 4), (3, 5); 
 
 
