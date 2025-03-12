@@ -37,8 +37,10 @@ public class RestauranteController {
 	private CadastroCozinhaService cadastroCozinha;
 	
 	@GetMapping
-	public List<Restaurante> listar() {
-		return cadastroRestaurante.listar();
+	public List<Restaurante> listar() {		
+		var restaurantes =  cadastroRestaurante.listar();
+				
+		return restaurantes;
 	}
 		
 	@GetMapping("/{restauranteId}")
