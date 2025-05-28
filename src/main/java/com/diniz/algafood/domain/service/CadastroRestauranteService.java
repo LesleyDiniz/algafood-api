@@ -1,6 +1,7 @@
 package com.diniz.algafood.domain.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -8,30 +9,28 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.diniz.algafood.domain.exception.EntidadeEmUsoException;
-import com.diniz.algafood.domain.exception.EntidadeNaoEncontradaException;
+import com.diniz.algafood.domain.exception.RestauranteNaoEncontradoException;
 import com.diniz.algafood.domain.model.Restaurante;
-import com.diniz.algafood.domain.repository.CozinhaRepository;
 import com.diniz.algafood.domain.repository.RestauranteRepository;
 
 @Service
 public class CadastroRestauranteService {
 
-	private static final String MSG_COZINHA_NAO_ENCONTRADA = "Não existe cadastro de cozinha com código %d!";
-
 	private static final String MSG_RESTAURANTE_EM_USO = "Restaurante de código %d não pode ser removido, pois está em uso!";
-
-	private static final String MSG_RESTAURANTE_NAO_ENCONTRADO = "Não existe cadastro de restaurante com código %d!";
 
 	@Autowired
 	private RestauranteRepository restauranteRepository;
 	
 	@Autowired
-	private CozinhaRepository cozinhaRepository;
+	private CadastroCozinhaService cadastroCozinhaService;
 	
-	public Restaurante buscar(Long restauranteId) {
+	public Optional<Restaurante> buscar(Long restauranteId) {
+		return restauranteRepository.findById(restauranteId);
+	}
+	
+	public Restaurante buscarOuFalhar(Long restauranteId) {
 		return restauranteRepository.findById(restauranteId)
-				.orElseThrow(() -> new EntidadeNaoEncontradaException(
-						String.format(MSG_RESTAURANTE_NAO_ENCONTRADO, restauranteId)));
+				.orElseThrow(() -> new RestauranteNaoEncontradoException(restauranteId));
 	}
 	
 	public List<Restaurante> listar() {
@@ -41,9 +40,7 @@ public class CadastroRestauranteService {
 	
 	public Restaurante salvar(Restaurante restaurante) {
 		var cozinhaId = restaurante.getCozinha().getId();
-		var cozinha = cozinhaRepository.findById(cozinhaId)
-				.orElseThrow(() -> new EntidadeNaoEncontradaException(
-						String.format(MSG_COZINHA_NAO_ENCONTRADA, cozinhaId)));
+		var cozinha = cadastroCozinhaService.buscarOuFalhar(cozinhaId);
 				
 		restaurante.setCozinha(cozinha);
 		
@@ -55,8 +52,7 @@ public class CadastroRestauranteService {
 		try {
 			restauranteRepository.deleteById(restauranteId);
 		} catch (EmptyResultDataAccessException e) {
-			throw new EntidadeNaoEncontradaException (
-					String.format(MSG_RESTAURANTE_NAO_ENCONTRADO, restauranteId));
+			throw new RestauranteNaoEncontradoException(restauranteId);
 		} catch (DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoException(
 					String.format(MSG_RESTAURANTE_EM_USO, restauranteId));

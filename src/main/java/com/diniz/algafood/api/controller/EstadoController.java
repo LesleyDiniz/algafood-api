@@ -32,7 +32,7 @@ public class EstadoController {
 	
 	@GetMapping("/{estadoId}")
 	public Estado buscar(@PathVariable Long estadoId) {
-		return cadastroEstadoService.buscar(estadoId);
+		return cadastroEstadoService.buscarOuFalhar(estadoId);
 	}
 	
 	@PostMapping
@@ -43,7 +43,7 @@ public class EstadoController {
 	
 	@PutMapping("/{estadoId}")
 	public Estado atualizar(@PathVariable Long estadoId, @RequestBody Estado estado ) {
-		var estadoAtual = cadastroEstadoService.buscar(estadoId);
+		var estadoAtual = cadastroEstadoService.buscarOuFalhar(estadoId);
 		
 		BeanUtils.copyProperties(estado, estadoAtual, "id");
 		return cadastroEstadoService.salvar(estadoAtual);

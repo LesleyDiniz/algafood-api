@@ -32,8 +32,7 @@ public class CozinhaController {
 		
 	@GetMapping("/{cozinhaId}")
 	public Cozinha buscar(@PathVariable Long cozinhaId) {
-		return cadastroCozinha.buscar(cozinhaId);
-
+		return cadastroCozinha.buscarOuFalhar(cozinhaId);
 	}
 	
 	@PostMapping
@@ -44,7 +43,7 @@ public class CozinhaController {
 	
 	@PutMapping("/{cozinhaId}")
 	public Cozinha atualizar(@PathVariable Long cozinhaId, @RequestBody Cozinha cozinha ) {
-		var cozinhaAtual = cadastroCozinha.buscar(cozinhaId);
+		var cozinhaAtual = cadastroCozinha.buscarOuFalhar(cozinhaId);
 		
 		BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
 		return cadastroCozinha.salvar(cozinhaAtual);

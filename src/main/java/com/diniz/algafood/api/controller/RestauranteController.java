@@ -19,8 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.diniz.algafood.domain.exception.EntidadeNaoEncontradaException;
+import com.diniz.algafood.domain.exception.NegocioException;
 import com.diniz.algafood.domain.model.Restaurante;
-import com.diniz.algafood.domain.service.CadastroCozinhaService;
 import com.diniz.algafood.domain.service.CadastroRestauranteService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -31,9 +32,6 @@ public class RestauranteController {
 	@Autowired
 	private CadastroRestauranteService cadastroRestaurante;
 	
-	@Autowired
-	private CadastroCozinhaService cadastroCozinha;
-	
 	@GetMapping
 	public List<Restaurante> listar() {		
 		return cadastroRestaurante.listar();
@@ -41,21 +39,29 @@ public class RestauranteController {
 		
 	@GetMapping("/{restauranteId}")
 	public Restaurante buscar(@PathVariable Long restauranteId) {
-		return cadastroRestaurante.buscar(restauranteId);
+		return cadastroRestaurante.buscarOuFalhar(restauranteId);
 	}
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Restaurante adicionar(@RequestBody Restaurante restaurante ) {
-		return cadastroRestaurante.salvar(restaurante);		
+		try {
+			return cadastroRestaurante.salvar(restaurante);		
+		} catch (EntidadeNaoEncontradaException e) {
+			throw new NegocioException(e.getMessage());
+		}
 	}
 	
 	@PutMapping("/{restauranteId}")
 	public Restaurante atualizar(@PathVariable Long restauranteId, @RequestBody Restaurante restaurante ) {
-		var restauranteAtual = cadastroRestaurante.buscar(restauranteId);
+		var restauranteAtual = cadastroRestaurante.buscarOuFalhar(restauranteId);
 		
 		BeanUtils.copyProperties(restaurante, restauranteAtual, "id", "formasPagamento", "endereco", "dataCadastro");
-		return cadastroRestaurante.salvar(restauranteAtual);
+		try {
+			return cadastroRestaurante.salvar(restaurante);		
+		} catch (EntidadeNaoEncontradaException e) {
+			throw new NegocioException(e.getMessage());
+		}
 	}
 	
 	@DeleteMapping("/{restauranteId}")
@@ -66,7 +72,7 @@ public class RestauranteController {
 	
 	@PatchMapping("/{restauranteId}")
 	public Restaurante atualizarParcial(@PathVariable Long restauranteId, @RequestBody Map<String, Object> campos) {
-		var restauranteAtual = cadastroRestaurante.buscar(restauranteId);
+		var restauranteAtual = cadastroRestaurante.buscarOuFalhar(restauranteId);
 		
 		merge(campos, restauranteAtual);
 		return atualizar(restauranteId, restauranteAtual);
