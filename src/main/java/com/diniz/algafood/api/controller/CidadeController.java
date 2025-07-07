@@ -20,6 +20,8 @@ import com.diniz.algafood.domain.exception.NegocioException;
 import com.diniz.algafood.domain.model.Cidade;
 import com.diniz.algafood.domain.service.CadastroCidadeService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/cidades")
 public class CidadeController {
@@ -39,7 +41,7 @@ public class CidadeController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Cidade adicionar(@RequestBody Cidade cidade ) {
+	public Cidade adicionar(@RequestBody @Valid Cidade cidade ) {
 		try {
 			return cadastroCidade.salvar(cidade);
 		} catch (EstadoNaoEncontradoException e) {
@@ -48,7 +50,7 @@ public class CidadeController {
 	}
 	
 	@PutMapping("/{cidadeId}")
-	public Cidade atualizar(@PathVariable Long cidadeId, @RequestBody Cidade cidade ) {
+	public Cidade atualizar(@PathVariable Long cidadeId, @RequestBody @Valid Cidade cidade ) {
 		var cidadeAtual = cadastroCidade.buscarOuFalhar(cidadeId);
 		
 		BeanUtils.copyProperties(cidade, cidadeAtual, "id");

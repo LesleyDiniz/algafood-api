@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.diniz.algafood.domain.model.Cozinha;
 import com.diniz.algafood.domain.service.CadastroCozinhaService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/cozinhas")
 public class CozinhaController {
@@ -37,12 +39,12 @@ public class CozinhaController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Cozinha adicionar(@RequestBody Cozinha cozinha ) {
+	public Cozinha adicionar(@RequestBody @Valid Cozinha cozinha ) {
 		return cadastroCozinha.salvar(cozinha);
 	}
 	
 	@PutMapping("/{cozinhaId}")
-	public Cozinha atualizar(@PathVariable Long cozinhaId, @RequestBody Cozinha cozinha ) {
+	public Cozinha atualizar(@PathVariable Long cozinhaId, @RequestBody @Valid Cozinha cozinha ) {
 		var cozinhaAtual = cadastroCozinha.buscarOuFalhar(cozinhaId);
 		
 		BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");

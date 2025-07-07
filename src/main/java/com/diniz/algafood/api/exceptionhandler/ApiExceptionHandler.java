@@ -2,11 +2,13 @@ package com.diniz.algafood.api.exceptionhandler;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.TypeMismatchException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -27,6 +29,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 			+ "Tente novamente e se o problema persistir, entre em contato com o administrador do sistema.";
 	private static final String MSG_ERRO_RECURSO_NAO_ENCONTRADO = "Recurso que você está procurando não foi encontrado.";
 	private static final String MSG_ERRO_RECURSO_EM_USO = "Recurso que você está tentando excluir está em uso e não pode ser removido.";
+	private static final String MSG_ERRO_DADOS_INVALIDOS = "Um ou mais campos estão inválidos. Faça o preenchimento correto e tente novamente.";
 	
 	@ExceptionHandler(Exception.class)
 	protected ResponseEntity<Object> handleUncaught(Exception ex, WebRequest request) {
@@ -140,6 +143,43 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 				.userMessage(MSG_ERRO_GENERICO_USUARIO_FINAL)
 				.build();
 		return handleExceptionInternal(ex, problem, headers, status, request);
+	}
+	
+	@Override
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(
+			MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode statusCode, WebRequest request){
+		
+		var problemType = ProblemType.DADOS_INVALIDOS;
+		var detail = "Um ou mais campos estão inválidos. Faça o preenchimento correto e tente novamente.";
+		
+		var fields = ex.getBindingResult().getFieldErrors().stream()
+				.map(fieldError -> Problem.Field.builder()
+						.name(fieldError.getField())
+						.userMessage(fieldError.getDefaultMessage())
+						.build())
+				.toList();
+		
+		var problem = createProblemBuilder(statusCode, problemType, detail)
+				.userMessage(MSG_ERRO_DADOS_INVALIDOS)
+				.fields(fields)
+				.build();
+		
+		return handleExceptionInternal(ex, problem, headers, statusCode, request);
+		
+	}
+
+	@ExceptionHandler(DataIntegrityViolationException.class)
+	public ResponseEntity<?> handleDataIntegrityViolation(DataIntegrityViolationException ex, WebRequest request) {
+		var status = HttpStatus.BAD_REQUEST;
+		var problemType = ProblemType.DADOS_INVALIDOS;
+		var detail = "Um ou mais campos estão inválidos. Faça o preenchimento correto e tente novamente.";
+						
+		var problem = createProblemBuilder(status, problemType, detail)
+				.userMessage(MSG_ERRO_DADOS_INVALIDOS)
+				.build();
+		
+		return handleExceptionInternal(ex, problem, new HttpHeaders(), 
+				status, request);
 	}
 	
 	@ExceptionHandler(EntidadeNaoEncontradaException.class)
