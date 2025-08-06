@@ -1,6 +1,6 @@
 package com.diniz.algafood.domain.model;
 
-import com.diniz.algafood.Groups;
+import com.diniz.algafood.core.validation.Groups;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

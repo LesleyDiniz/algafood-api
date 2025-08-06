@@ -2,12 +2,17 @@ package com.diniz.algafood.api.exceptionhandler;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.TypeMismatchException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,6 +21,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+import com.diniz.algafood.core.validation.ValidacaoException;
 import com.diniz.algafood.domain.exception.EntidadeEmUsoException;
 import com.diniz.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.diniz.algafood.domain.exception.NegocioException;
@@ -30,6 +36,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	private static final String MSG_ERRO_RECURSO_NAO_ENCONTRADO = "Recurso que você está procurando não foi encontrado.";
 	private static final String MSG_ERRO_RECURSO_EM_USO = "Recurso que você está tentando excluir está em uso e não pode ser removido.";
 	private static final String MSG_ERRO_DADOS_INVALIDOS = "Um ou mais campos estão inválidos. Faça o preenchimento correto e tente novamente.";
+	
+	@Autowired
+	private MessageSource messageSource;
 	
 	@ExceptionHandler(Exception.class)
 	protected ResponseEntity<Object> handleUncaught(Exception ex, WebRequest request) {
@@ -149,24 +158,48 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(
 			MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode statusCode, WebRequest request){
 		
+		return handleValidationInternal(ex, ex.getBindingResult(), headers, statusCode, request);		
+		
+	}
+
+	private ResponseEntity<Object> handleValidationInternal(Exception ex, BindingResult bindingResult, HttpHeaders headers,
+			HttpStatusCode status, WebRequest request) {
+		
 		var problemType = ProblemType.DADOS_INVALIDOS;
 		var detail = "Um ou mais campos estão inválidos. Faça o preenchimento correto e tente novamente.";
 		
-		var fields = ex.getBindingResult().getFieldErrors().stream()
-				.map(fieldError -> Problem.Field.builder()
-						.name(fieldError.getField())
-						.userMessage(fieldError.getDefaultMessage())
-						.build())
+		var problemObjects = bindingResult.getAllErrors().stream()
+				.map(objectError -> {
+					String message = messageSource.getMessage(objectError, LocaleContextHolder.getLocale());
+					
+					String name = objectError.getObjectName();
+					
+					if (objectError instanceof FieldError) {
+						name = ((FieldError) objectError).getField();
+					} 
+					
+					return Problem.Object.builder()
+						.name(name)
+						.userMessage(message)
+						.build();
+				})
 				.toList();
 		
-		var problem = createProblemBuilder(statusCode, problemType, detail)
+		var problem = createProblemBuilder(status, problemType, detail)
 				.userMessage(MSG_ERRO_DADOS_INVALIDOS)
-				.fields(fields)
+				.objects(problemObjects)
 				.build();
 		
-		return handleExceptionInternal(ex, problem, headers, statusCode, request);
-		
+		return handleExceptionInternal(ex, problem, headers, status, request);
 	}
+	
+	
+	@ExceptionHandler(ValidacaoException.class)
+	public ResponseEntity<?> handleValidacao(ValidacaoException ex, WebRequest request) {
+		var status = HttpStatus.BAD_REQUEST;
+		return handleValidationInternal(ex, ex.getBindingResult(), new HttpHeaders(), status, request);
+	}
+	
 
 	@ExceptionHandler(DataIntegrityViolationException.class)
 	public ResponseEntity<?> handleDataIntegrityViolation(DataIntegrityViolationException ex, WebRequest request) {

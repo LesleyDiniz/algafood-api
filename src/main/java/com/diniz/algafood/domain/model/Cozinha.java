@@ -3,7 +3,7 @@ package com.diniz.algafood.domain.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.diniz.algafood.Groups;
+import com.diniz.algafood.core.validation.Groups;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;

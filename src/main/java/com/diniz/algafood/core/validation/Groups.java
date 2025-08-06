@@ -1,4 +1,4 @@
-package com.diniz.algafood;
+package com.diniz.algafood.core.validation;
 
 public interface Groups {
 	public interface CozinhaId { }
