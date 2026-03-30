@@ -1,0 +1,110 @@
+[
+	{
+		"id": 1,
+		"nome": "AC"
+	},
+	{
+		"id": 2,
+        "nome": "AL"
+    },
+    {
+		"id": 3,
+        "nome": "AP"
+    },
+    {
+		"id": 4,
+        "nome": "AM"
+    },
+    {
+		"id": 5,
+        "nome": "BA"
+    },
+    {
+		"id": 6,
+        "nome": "CE"
+    },
+    {
+		"id": 7,
+        "nome": "DF"
+    },
+    {
+		"id": 8,
+        "nome": "ES"
+    },
+    {
+		"id": 9,
+        "nome": "GO"
+    },
+    {
+		"id": 10,
+        "nome": "MA"
+    },
+    {
+		"id": 11,
+        "nome": "MT"
+    },
+    {
+		"id": 12,
+        "nome": "MS"
+    },
+    {
+		"id": 13,
+        "nome": "MG"
+    },
+    {
+		"id": 14,
+        "nome": "PA"
+    },
+    {
+		"id": 15,
+        "nome": "PB"
+    },
+    {
+		"id": 16,
+        "nome": "PR"
+    },
+    {
+		"id": 17,
+        "nome": "PE"
+    },
+    {
+		"id": 18,
+        "nome": "PI"
+    },
+    {
+		"id": 19,
+        "nome": "RJ"
+    },
+    {
+		"id": 20,
+        "nome": "RN"
+    },
+    {
+		"id": 21,
+        "nome": "RS"
+    },
+    {
+		"id": 22,
+        "nome": "RO"
+    },
+    {
+		"id": 23,
+        "nome": "RR"
+    },
+    {
+		"id": 24,
+        "nome": "SC"
+    },
+    {
+		"id": 25,
+        "nome": "SP"
+    },
+    {
+		"id": 26,
+        "nome": "SE"
+    },
+    {
+		"id": 27,
+        "nome": "TO"
+    }
+]

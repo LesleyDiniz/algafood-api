@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.diniz.algafood.core.validation.Groups;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,8 +30,7 @@ public class Cozinha {
 	@NotBlank
 	@Column(nullable = false)
 	private String nome;
-	
-	@JsonIgnore
+
 	@OneToMany(mappedBy = "cozinha")
 	private List<Restaurante> restaurantes = new ArrayList<>();
 	

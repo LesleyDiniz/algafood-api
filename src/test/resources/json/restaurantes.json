@@ -1,0 +1,30 @@
+[
+	{
+		"nome": "Thai Gourmet",
+		"taxaFrete": 3.50,
+		"cozinha":{
+			"id": 1
+		}
+	},
+	{
+        "nome": "Miraku",
+		"taxaFrete": 2.50,
+		"cozinha":{
+			"id": 2
+		}
+    },
+    {
+        "nome": "China in Box",
+		"taxaFrete": 2.50,
+		"cozinha":{
+			"id": 3
+		}
+    },
+    {
+        "nome": "Tuk Tuk Comida Indiana",
+		"taxaFrete": 5.50,
+		"cozinha":{
+			"id": 6
+		}
+    }
+]
