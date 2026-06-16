@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CozinhaInput {
+public class EstadoInput {
 	
 	@NotBlank
 	private String nome;

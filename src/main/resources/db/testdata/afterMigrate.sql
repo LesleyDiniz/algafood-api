@@ -57,7 +57,7 @@ insert into estado (id, nome) values (25, 'São Paulo');
 insert into estado (id, nome) values (26, 'Sergipe');
 insert into estado (id, nome) values (27, 'Tocantins');
 
-insert into cidade (nome, estado_id) values ('Uberlãndia', 13);
+insert into cidade (nome, estado_id) values ('Uberlândia', 13);
 insert into cidade (nome, estado_id) values ('Uberaba', 13);
 insert into cidade (nome, estado_id) values ('Araguari', 13);
 
@@ -74,9 +74,9 @@ insert into permissao (nome, descricao) values ('READ_COZINHA', 'Consultar cozin
 insert into permissao (nome, descricao) values ('WRITE_COZINHA', 'Criar/Alterar cozinhas');
 insert into permissao (nome, descricao) values ('REMOVE_COZINHA', 'Remover cozinhas');
 
-insert into restaurante (nome, taxa_frete, cozinha_id, endereco_cidade_id, endereco_bairro, endereco_cep, endereco_complemento, endereco_logradouro, endereco_numero, data_cadastro, data_atualizacao) values ('Thai Gourmet', 10, 1, 1, 'Centro', '38400-000', 'Loja 1', 'Rua 1', '100', utc_timestamp, utc_timestamp);
-insert into restaurante (nome, taxa_frete, cozinha_id, endereco_cidade_id, endereco_bairro, endereco_cep, endereco_complemento, endereco_logradouro, endereco_numero, data_cadastro, data_atualizacao) values ('Thai Delivery', 9.50, 1, 1, 'Centro', '38400-000', 'Loja 2', 'Rua 2', '200', utc_timestamp, utc_timestamp);
-insert into restaurante (nome, taxa_frete, cozinha_id, endereco_cidade_id, endereco_bairro, endereco_cep, endereco_complemento, endereco_logradouro, endereco_numero, data_cadastro, data_atualizacao) values ('Tuk Tuk Comida Indiana', 15, 2, 2, 'Centro', '38400-000', 'Loja 3', 'Rua 3', '300', utc_timestamp, utc_timestamp); 
+insert into restaurante (nome, taxa_frete, cozinha_id, endereco_cidade_id, endereco_bairro, endereco_cep, endereco_complemento, endereco_logradouro, endereco_numero, data_cadastro, data_atualizacao, ativo) values ('Thai Gourmet', 10, 1, 1, 'Centro', '38400-000', 'Loja 1', 'Rua 1', '100', utc_timestamp, utc_timestamp, 1);
+insert into restaurante (nome, taxa_frete, cozinha_id, endereco_cidade_id, endereco_bairro, endereco_cep, endereco_complemento, endereco_logradouro, endereco_numero, data_cadastro, data_atualizacao, ativo) values ('Thai Delivery', 9.50, 1, 1, 'Centro', '38400-000', 'Loja 2', 'Rua 2', '200', utc_timestamp, utc_timestamp, 1);
+insert into restaurante (nome, taxa_frete, cozinha_id, endereco_cidade_id, endereco_bairro, endereco_cep, endereco_complemento, endereco_logradouro, endereco_numero, data_cadastro, data_atualizacao, ativo) values ('Tuk Tuk Comida Indiana', 15, 2, 2, 'Centro', '38400-000', 'Loja 3', 'Rua 3', '300', utc_timestamp, utc_timestamp, 1); 
 
 insert into restaurante_forma_pagamento (restaurante_id, forma_pagamento_id) values (1, 1), (1, 2), (1, 3), (1, 4), (1, 5); 
 insert into restaurante_forma_pagamento (restaurante_id, forma_pagamento_id) values (2, 1), (2, 2), (2, 4); 
@@ -85,3 +85,9 @@ insert into restaurante_forma_pagamento (restaurante_id, forma_pagamento_id) val
 insert into produto (ativo, preco, restaurante_id, nome, descricao) values (1, 50.00, 1, 'Pad Tha', 'Tradicionalmente, é preparado com noodles de arroz, tofu ou camarão, ovo, amendoim, broto de feijão e temperado com molho de tamarindo, açúcar, molho de peixe e pimenta. Cada garfada oferece uma explosão de sabores, tornando-o uma verdadeira experiência gastronômica!');
 insert into produto (ativo, preco, restaurante_id, nome, descricao) values (1, 45.50, 1, 'Tom Yum Goong', 'Tom Yum Goong é muito mais do que uma simples sopa. É uma sinfonia de especiarias que dançam harmoniosamente para criar um perfil de sabor único');
 insert into produto (ativo, preco, restaurante_id, nome, descricao) values (1, 42.50, 1, 'Pad Kra Pao', 'É um prato tradicional tailandês que se destaca pelo uso do manjericão sagrado (holy basil), alho e pimenta');
+
+insert into forma_pagamento (descricao) values ('Pix');
+insert into forma_pagamento (descricao) values ('Cartão de crédito (a vista)');
+insert into forma_pagamento (descricao) values ('Cartão de crédito (parcelado)');
+insert into forma_pagamento (descricao) values ('Cartão de débito');
+insert into forma_pagamento (descricao) values ('Dinheiro');
