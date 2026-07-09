@@ -16,9 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.diniz.algafood.api.assembler.RestauranteInputDisassembler;
 import com.diniz.algafood.api.assembler.RestauranteModelAssembler;
-import com.diniz.algafood.api.model.RestauranteInput;
 import com.diniz.algafood.api.model.RestauranteOutput;
-import com.diniz.algafood.domain.exception.EntidadeNaoEncontradaException;
+import com.diniz.algafood.api.model.input.RestauranteInput;
+import com.diniz.algafood.domain.exception.CidadeNaoEncontradaException;
+import com.diniz.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.diniz.algafood.domain.exception.NegocioException;
 import com.diniz.algafood.domain.model.Restaurante;
 import com.diniz.algafood.domain.service.CadastroRestauranteService;
@@ -59,10 +60,10 @@ public class RestauranteController {
 		try {
 			Restaurante restaurante = restauranteInputDisassembler.toDomainObject(restauranteInput);
 			return restauranteModelAssembler.toModel(cadastroRestaurante.salvar(restaurante));
-		} catch (EntidadeNaoEncontradaException e) {
+		} catch (CozinhaNaoEncontradaException | CidadeNaoEncontradaException e) {
 			throw new NegocioException(e.getMessage());
 		}
-	}
+	} 
 	
 	@PutMapping("/{restauranteId}")
 	public RestauranteOutput atualizar(@PathVariable Long restauranteId, @RequestBody @Valid RestauranteInput restauranteInput ) {
@@ -73,7 +74,7 @@ public class RestauranteController {
 		
 			return restauranteModelAssembler.toModel(cadastroRestaurante.salvar(restauranteAtual));
 			
-		} catch (EntidadeNaoEncontradaException e) {
+		} catch (CozinhaNaoEncontradaException | CidadeNaoEncontradaException e) {
 			throw new NegocioException(e.getMessage());
 		}
 	}
@@ -95,6 +96,18 @@ public class RestauranteController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void inativar(@PathVariable Long restauranteId) {
 		cadastroRestaurante.inativar(restauranteId);
+	}
+	
+	@PutMapping("/{restauranteId}/aberto")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void abrir(@PathVariable Long restauranteId) {
+		cadastroRestaurante.abrir(restauranteId);
+	}
+	
+	@PutMapping("/{restauranteId}/fechamento")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void fechar(@PathVariable Long restauranteId) {
+		cadastroRestaurante.fechar(restauranteId);
 	}
 	
 	

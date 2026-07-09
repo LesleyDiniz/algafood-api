@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.diniz.algafood.api.assembler.CozinhaInputDisassembler;
 import com.diniz.algafood.api.assembler.CozinhaModelAssembler;
-import com.diniz.algafood.api.model.CozinhaInput;
 import com.diniz.algafood.api.model.CozinhaOutput;
+import com.diniz.algafood.api.model.input.CozinhaInput;
 import com.diniz.algafood.domain.service.CadastroCozinhaService;
 
 import jakarta.validation.Valid;

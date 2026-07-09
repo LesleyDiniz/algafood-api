@@ -1,0 +1,44 @@
+package com.diniz.algafood.api.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.diniz.algafood.api.assembler.PermissaoModelAssembler;
+import com.diniz.algafood.api.model.PermissaoOutput;
+import com.diniz.algafood.domain.service.CadastroGrupoService;
+
+@RestController
+@RequestMapping("/grupos/{grupoId}/permissoes")
+public class GrupoPermissaoController {
+	
+	@Autowired
+	private CadastroGrupoService cadastroGrupo;
+	
+	@Autowired
+	private PermissaoModelAssembler permissaoModelAssembler;
+	
+	@GetMapping
+	public List<PermissaoOutput> listar(@PathVariable Long grupoId) {
+		var grupo = cadastroGrupo.buscarOuFalhar(grupoId);
+		
+		return permissaoModelAssembler.toCollectionModel(grupo.getPermissoes());
+	}
+	
+	@DeleteMapping("/{permissaoId}")
+	public void desassociar(@PathVariable Long grupoId, @PathVariable Long permissaoId) {
+		cadastroGrupo.desassociarPermissao(grupoId, permissaoId);
+	}
+	
+	@PutMapping("/{permissaoId}")
+	public void associar(@PathVariable Long grupoId, @PathVariable Long permissaoId) {
+		cadastroGrupo.associarPermissao(grupoId, permissaoId);
+	}
+	
+}

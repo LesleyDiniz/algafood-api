@@ -5,9 +5,11 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class EstadoOutput {
+public class UsuarioOutput {
 
 	@EqualsAndHashCode.Include
 	private Long id;
 	private String nome;
+	private String email;
+	
 }

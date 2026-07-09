@@ -1,14 +1,13 @@
 package com.diniz.algafood.api.model;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class EstadoIdInput {
-	
-	@NotNull
+public class PermissaoOutput {
+
 	private Long id;
-	
+	private String nome;
+	private String descricao;
 }

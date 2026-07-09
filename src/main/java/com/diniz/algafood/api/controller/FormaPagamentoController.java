@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.diniz.algafood.api.assembler.FormaPagamentoInputDisassembler;
 import com.diniz.algafood.api.assembler.FormaPagamentoModelAssembler;
-import com.diniz.algafood.api.model.FormaPagamentoInput;
 import com.diniz.algafood.api.model.FormaPagamentoOutput;
-import com.diniz.algafood.domain.service.FormaPagamentoService;
+import com.diniz.algafood.api.model.input.FormaPagamentoInput;
+import com.diniz.algafood.domain.service.CadastroFormaPagamentoService;
 
 import jakarta.validation.Valid;
 
@@ -27,7 +27,7 @@ import jakarta.validation.Valid;
 public class FormaPagamentoController {
 	
 	@Autowired
-	private FormaPagamentoService cadastroFormaPagamento;
+	private CadastroFormaPagamentoService cadastroFormaPagamento;
 	
 	@Autowired
 	private FormaPagamentoModelAssembler formaPagamentoModelAssembler;

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.diniz.algafood.domain.exception.EntidadeEmUsoException;
 import com.diniz.algafood.domain.exception.RestauranteNaoEncontradoException;
+import com.diniz.algafood.domain.model.Produto;
 import com.diniz.algafood.domain.model.Restaurante;
 import com.diniz.algafood.domain.repository.RestauranteRepository;
 
@@ -24,6 +25,15 @@ public class CadastroRestauranteService {
 	
 	@Autowired
 	private CadastroCozinhaService cadastroCozinhaService;
+	
+	@Autowired
+	private CadastroCidadeService cadastroCidadeService;
+	
+	@Autowired
+	private CadastroProdutoService cadastroProdutoService;
+	
+	@Autowired
+	private CadastroFormaPagamentoService cadastroFormaPagamentoService;
 	
 	public Optional<Restaurante> buscar(Long restauranteId) {
 		return restauranteRepository.findById(restauranteId);
@@ -51,11 +61,27 @@ public class CadastroRestauranteService {
 	}
 	
 	@Transactional
+	public void abrir(Long restauranteId) {
+		var restaurante = buscarOuFalhar(restauranteId);
+		restaurante.abrir();
+	}
+	
+	@Transactional
+	public void fechar(Long restauranteId) {
+		var restaurante = buscarOuFalhar(restauranteId);
+		restaurante.fechar();
+	}
+	
+	@Transactional
 	public Restaurante salvar(Restaurante restaurante) {
 		var cozinhaId = restaurante.getCozinha().getId();
+		var cidadeId = restaurante.getEndereco().getCidade().getId();
+		
 		var cozinha = cadastroCozinhaService.buscarOuFalhar(cozinhaId);
+		var cidade = cadastroCidadeService.buscarOuFalhar(cidadeId);
 				
 		restaurante.setCozinha(cozinha);
+		restaurante.getEndereco().setCidade(cidade);
 		
 		return restauranteRepository.save(restaurante);
 	}
@@ -72,5 +98,32 @@ public class CadastroRestauranteService {
 					String.format(MSG_RESTAURANTE_EM_USO, restauranteId));
 		}
 	}
-
+	
+	@Transactional
+	public void desassociarFormaPagamento(Long restauranteId, Long formaPagamentoId) {
+		var restaurante = buscarOuFalhar(restauranteId);
+		var formaPagamento = cadastroFormaPagamentoService.buscarOuFalhar(formaPagamentoId);
+		restaurante.removerFormaPagamento(formaPagamento);
+	}
+	
+	@Transactional
+	public void associarFormaPagamento(Long restauranteId, Long formaPagamentoId) {
+		var restaurante = buscarOuFalhar(restauranteId);
+		var formaPagamento = cadastroFormaPagamentoService.buscarOuFalhar(formaPagamentoId);
+		restaurante.adicionarFormaPagamento(formaPagamento);
+	}
+	
+	@Transactional
+	public void removerProduto(Long restauranteId, Long produtoId) {
+		var restaurante = buscarOuFalhar(restauranteId);
+		restaurante.removerProduto(produtoId);
+	}
+	
+	@Transactional
+	public void adicionarProduto(Long restauranteId, Produto produto) {
+		var restaurante = buscarOuFalhar(restauranteId);
+		produto.setRestaurante(restaurante);
+		cadastroProdutoService.salvar(produto);
+	}
+	
 }

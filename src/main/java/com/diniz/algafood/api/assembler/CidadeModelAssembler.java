@@ -21,7 +21,7 @@ public class CidadeModelAssembler {
 	
 	public List<CidadeOutput> toCollectionModel(List<Cidade> cidades) {
 		return cidades.stream()
-				.map(restaurante -> toModel(restaurante))
+				.map(cidade -> toModel(cidade))
 				.toList();
 	}
 }

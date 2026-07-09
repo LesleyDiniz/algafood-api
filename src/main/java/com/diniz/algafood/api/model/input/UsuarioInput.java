@@ -1,4 +1,4 @@
-package com.diniz.algafood.api.model;
+package com.diniz.algafood.api.model.input;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -6,8 +6,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CozinhaInput {
+public class UsuarioInput {
 	
 	@NotBlank
 	private String nome;
+
+	@NotBlank
+	private String email;
+	
 }

@@ -1,4 +1,4 @@
-package com.diniz.algafood.api.model;
+package com.diniz.algafood.api.model.input;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;

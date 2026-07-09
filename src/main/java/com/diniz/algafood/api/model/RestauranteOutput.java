@@ -14,6 +14,7 @@ public class RestauranteOutput {
 	private BigDecimal taxaFrete;
 	private CozinhaOutput cozinha;
 	private Boolean ativo;
+	private Boolean aberto;
 	private EnderecoOutput endereco;
 
 }

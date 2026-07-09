@@ -1,10 +1,13 @@
-package com.diniz.algafood.api.model;
+package com.diniz.algafood.api.model.input;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class FormaPagamentoInput {
+public class PermissaoInput {
+
+	@NotBlank
+	private String nome;
 	
 	@NotBlank
 	private String descricao;

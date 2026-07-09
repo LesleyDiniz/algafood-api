@@ -1,5 +1,6 @@
 package com.diniz.algafood.api.assembler;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -20,8 +21,9 @@ public class FormaPagamentoModelAssembler {
 		return modelMapper.map(formaPagamento, FormaPagamentoOutput.class);
 	}
 	
-	public List<FormaPagamentoOutput> toCollectionModel(List<FormaPagamento> formaPagamentos) {
+	public List<FormaPagamentoOutput> toCollectionModel(Collection<FormaPagamento> formaPagamentos) {
 		return formaPagamentos.stream()
+				.sorted((f1, f2) -> f1.getId().compareTo(f2.getId()))
 				.map(formaPagamento -> toModel(formaPagamento))
 				.toList();
 	}

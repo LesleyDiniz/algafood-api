@@ -4,7 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.diniz.algafood.api.model.CidadeInput;
+import com.diniz.algafood.api.model.input.CidadeInput;
 import com.diniz.algafood.domain.model.Cidade;
 import com.diniz.algafood.domain.model.Estado;
 

@@ -1,12 +1,11 @@
 package com.diniz.algafood.domain.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.diniz.algafood.domain.model.FormaPagamento;
 
 @Repository
-public interface FormaPagamentoRepository extends JpaRepository<FormaPagamento, Long> {
+public interface FormaPagamentoRepository extends CustomJpaRepository<FormaPagamento, Long> {
 	
 //	List<FormaPagamento> listar();
 //	FormaPagamento buscar(Long id);

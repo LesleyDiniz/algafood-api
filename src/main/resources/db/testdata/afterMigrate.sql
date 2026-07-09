@@ -61,22 +61,28 @@ insert into cidade (nome, estado_id) values ('Uberlândia', 13);
 insert into cidade (nome, estado_id) values ('Uberaba', 13);
 insert into cidade (nome, estado_id) values ('Araguari', 13);
 
-insert into forma_pagamento (descricao) values ('A vista credito');
-insert into forma_pagamento (descricao) values ('A vista debito');
-insert into forma_pagamento (descricao) values ('Parcelado credito');
 insert into forma_pagamento (descricao) values ('Pix');
+insert into forma_pagamento (descricao) values ('Cartão de crédito (a vista)');
+insert into forma_pagamento (descricao) values ('Cartão de crédito (parcelado)');
+insert into forma_pagamento (descricao) values ('Cartão de débito');
 insert into forma_pagamento (descricao) values ('Dinheiro');
 
 insert into permissao (nome, descricao) values ('READ_RESTAURANTE', 'Consultar restaurantes');
-insert into permissao (nome, descricao) values ('WRITE_RESTAURANTE', 'Criar/Alterar restaurantes');
+insert into permissao (nome, descricao) values ('WRITE_RESTAURANTE', 'Criar|Alterar restaurantes');
 insert into permissao (nome, descricao) values ('REMOVE_RESTAURANTE', 'Remover restaurantes'); 
 insert into permissao (nome, descricao) values ('READ_COZINHA', 'Consultar cozinhas');
-insert into permissao (nome, descricao) values ('WRITE_COZINHA', 'Criar/Alterar cozinhas');
-insert into permissao (nome, descricao) values ('REMOVE_COZINHA', 'Remover cozinhas');
+insert into permissao (nome, descricao) values ('WRITE_COZINHA', 'Criar|Alterar cozinhas');
+insert into permissao (nome, descricao) values ('REMOVE_COZINHA', 'Remover cozinhas'); 
+insert into permissao (nome, descricao) values ('READ_GRUPO', 'Consultar grupos');
+insert into permissao (nome, descricao) values ('WRITE_GRUPO', 'Criar|Alterar grupos');
+insert into permissao (nome, descricao) values ('REMOVE_GRUPO', 'Remover grupos'); 
+insert into permissao (nome, descricao) values ('READ_FORMA_PAGAMENTO', 'Consultar forma de pagamento');
+insert into permissao (nome, descricao) values ('WRITE_FORMA_PAGAMENTO', 'Criar|Alterar forma de pagamento');
+insert into permissao (nome, descricao) values ('REMOVE_FORMA_PAGAMENTO', 'Remover forma de pagamento');
 
-insert into restaurante (nome, taxa_frete, cozinha_id, endereco_cidade_id, endereco_bairro, endereco_cep, endereco_complemento, endereco_logradouro, endereco_numero, data_cadastro, data_atualizacao, ativo) values ('Thai Gourmet', 10, 1, 1, 'Centro', '38400-000', 'Loja 1', 'Rua 1', '100', utc_timestamp, utc_timestamp, 1);
-insert into restaurante (nome, taxa_frete, cozinha_id, endereco_cidade_id, endereco_bairro, endereco_cep, endereco_complemento, endereco_logradouro, endereco_numero, data_cadastro, data_atualizacao, ativo) values ('Thai Delivery', 9.50, 1, 1, 'Centro', '38400-000', 'Loja 2', 'Rua 2', '200', utc_timestamp, utc_timestamp, 1);
-insert into restaurante (nome, taxa_frete, cozinha_id, endereco_cidade_id, endereco_bairro, endereco_cep, endereco_complemento, endereco_logradouro, endereco_numero, data_cadastro, data_atualizacao, ativo) values ('Tuk Tuk Comida Indiana', 15, 2, 2, 'Centro', '38400-000', 'Loja 3', 'Rua 3', '300', utc_timestamp, utc_timestamp, 1); 
+insert into restaurante (nome, taxa_frete, cozinha_id, endereco_cidade_id, endereco_bairro, endereco_cep, endereco_complemento, endereco_logradouro, endereco_numero, data_cadastro, data_atualizacao, ativo, aberto) values ('Thai Gourmet', 10, 1, 1, 'Centro', '38400-000', 'Loja 1', 'Rua 1', '100', utc_timestamp, utc_timestamp, 1, 0);
+insert into restaurante (nome, taxa_frete, cozinha_id, endereco_cidade_id, endereco_bairro, endereco_cep, endereco_complemento, endereco_logradouro, endereco_numero, data_cadastro, data_atualizacao, ativo, aberto) values ('Thai Delivery', 9.50, 1, 1, 'Centro', '38400-000', 'Loja 2', 'Rua 2', '200', utc_timestamp, utc_timestamp, 1, 0);
+insert into restaurante (nome, taxa_frete, cozinha_id, endereco_cidade_id, endereco_bairro, endereco_cep, endereco_complemento, endereco_logradouro, endereco_numero, data_cadastro, data_atualizacao, ativo, aberto) values ('Tuk Tuk Comida Indiana', 15, 2, 2, 'Centro', '38400-000', 'Loja 3', 'Rua 3', '300', utc_timestamp, utc_timestamp, 1, 0); 
 
 insert into restaurante_forma_pagamento (restaurante_id, forma_pagamento_id) values (1, 1), (1, 2), (1, 3), (1, 4), (1, 5); 
 insert into restaurante_forma_pagamento (restaurante_id, forma_pagamento_id) values (2, 1), (2, 2), (2, 4); 
@@ -86,8 +92,15 @@ insert into produto (ativo, preco, restaurante_id, nome, descricao) values (1, 5
 insert into produto (ativo, preco, restaurante_id, nome, descricao) values (1, 45.50, 1, 'Tom Yum Goong', 'Tom Yum Goong é muito mais do que uma simples sopa. É uma sinfonia de especiarias que dançam harmoniosamente para criar um perfil de sabor único');
 insert into produto (ativo, preco, restaurante_id, nome, descricao) values (1, 42.50, 1, 'Pad Kra Pao', 'É um prato tradicional tailandês que se destaca pelo uso do manjericão sagrado (holy basil), alho e pimenta');
 
-insert into forma_pagamento (descricao) values ('Pix');
-insert into forma_pagamento (descricao) values ('Cartão de crédito (a vista)');
-insert into forma_pagamento (descricao) values ('Cartão de crédito (parcelado)');
-insert into forma_pagamento (descricao) values ('Cartão de débito');
-insert into forma_pagamento (descricao) values ('Dinheiro');
+insert into grupo (nome) values ('Gerente'), ('Vendedor'), ('Secretária'), ('Cadastrador'), ('Caixa'), ('Entregador');
+
+insert into grupo_permissao (grupo_id, permissao_id)
+select 1, id from permissao;
+
+
+insert into usuario (nome, email, senha, data_cadastro) values
+('Lesley Almeida Diniz', 'lesleydiniz@gamil.com', 'Teste123', utc_timestamp),
+('João da Silva', 'joao.ger@algafood.com', '123', utc_timestamp),
+('Maria Joaquina', 'maria.vnd@algafood.com', '123', utc_timestamp),
+('José Souza', 'jose.aux@algafood.com', '123', utc_timestamp),
+('Sebastião Martins', 'sebastiao.cad@algafood.com', '123', utc_timestamp); 

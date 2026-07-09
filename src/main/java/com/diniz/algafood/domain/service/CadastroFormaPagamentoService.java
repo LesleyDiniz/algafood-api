@@ -15,7 +15,7 @@ import com.diniz.algafood.domain.model.FormaPagamento;
 import com.diniz.algafood.domain.repository.FormaPagamentoRepository;
 
 @Service
-public class FormaPagamentoService {	
+public class CadastroFormaPagamentoService {	
 
 	private static final String MSG_FORMA_PAGAMENTO_EM_USO = "Forma de pagamento com código %d não pode ser removida, pois está em uso!";
 	

@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.diniz.algafood.api.assembler.CidadeInputDisassembler;
 import com.diniz.algafood.api.assembler.CidadeModelAssembler;
-import com.diniz.algafood.api.model.CidadeInput;
 import com.diniz.algafood.api.model.CidadeOutput;
+import com.diniz.algafood.api.model.input.CidadeInput;
 import com.diniz.algafood.domain.exception.EstadoNaoEncontradoException;
 import com.diniz.algafood.domain.exception.NegocioException;
 import com.diniz.algafood.domain.service.CadastroCidadeService;

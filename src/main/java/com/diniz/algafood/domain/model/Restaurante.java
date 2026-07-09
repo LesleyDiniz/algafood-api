@@ -2,8 +2,8 @@ package com.diniz.algafood.domain.model;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -53,6 +53,8 @@ public class Restaurante {
 	
 	private Boolean ativo = Boolean.TRUE;
 
+	private Boolean aberto = Boolean.FALSE;
+
 	@CreationTimestamp
 	@Column(nullable = false, columnDefinition = "datetime")
 	private OffsetDateTime dataCadastro;
@@ -65,10 +67,10 @@ public class Restaurante {
 	@JoinTable(name = "restaurante_forma_pagamento",
 			joinColumns = @JoinColumn(name = "restaurante_id"),
 			inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
-	private List<FormaPagamento> formasPagamento = new ArrayList<>();
+	private Set<FormaPagamento> formasPagamento = new HashSet<>();
 	
 	@OneToMany(mappedBy = "restaurante")
-	private List<Produto> produtos;
+	private Set<Produto> produtos = new HashSet<>();
 	
 	public void ativar() {
 		setAtivo(true);
@@ -76,5 +78,29 @@ public class Restaurante {
 	
 	public void inativar() {
 		setAtivo(false);
+	}
+	
+	public void abrir() {
+		setAberto(true);
+	}
+	
+	public void fechar() {
+		setAberto(false);
+	}
+	
+	public boolean removerFormaPagamento(FormaPagamento formaPagamento) {
+		return getFormasPagamento().remove(formaPagamento);
+	}
+	
+	public boolean adicionarFormaPagamento(FormaPagamento formaPagamento) {
+		return getFormasPagamento().add(formaPagamento);
+	}
+	
+	public boolean removerProduto(Long produtoId) {
+		return getProdutos().removeIf(produto -> produto.getId().equals(produtoId));
+	}
+	
+	public boolean adicionarProduto(Produto produto) {
+		return getProdutos().add(produto);
 	}
 }
