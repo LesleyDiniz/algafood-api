@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.diniz.algafood.domain.exception.EntidadeEmUsoException;
 import com.diniz.algafood.domain.exception.NegocioException;
 import com.diniz.algafood.domain.exception.UsuarioNaoEncontradoException;
+import com.diniz.algafood.domain.model.Grupo;
 import com.diniz.algafood.domain.model.Usuario;
 import com.diniz.algafood.domain.repository.UsuarioRepository;
 
@@ -22,6 +23,9 @@ public class CadastroUsuarioService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private CadastroGrupoService cadastroGrupoService;
 		
 	public Optional<Usuario> buscar(Long usuarioId) {
 		return usuarioRepository.findById(usuarioId);
@@ -60,7 +64,6 @@ public class CadastroUsuarioService {
 	}
 	
 	
-	
 	@Transactional
 	public void excluir(Long usuarioId) {
 		try {
@@ -73,5 +76,18 @@ public class CadastroUsuarioService {
 					String.format(MSG_CIDADE_EM_USO, usuarioId));
 		}
 	}
-
+	
+	@Transactional
+	public void associarGrupo(Long usuarioId, Long grupoId) {
+		Usuario usuario = buscarOuFalhar(usuarioId);
+		Grupo grupo = cadastroGrupoService.buscarOuFalhar(grupoId);
+		usuario.adicionarGrupo(grupo); 
+	}
+	
+	@Transactional
+	public void desassociarGrupo(Long usuarioId, Long grupoId) {
+		Usuario usuario = buscarOuFalhar(usuarioId);
+		Grupo grupo = cadastroGrupoService.buscarOuFalhar(grupoId);
+		usuario.removerGrupo(grupo);
+	}
 }

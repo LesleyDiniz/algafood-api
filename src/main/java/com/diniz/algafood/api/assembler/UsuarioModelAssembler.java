@@ -1,5 +1,6 @@
 package com.diniz.algafood.api.assembler;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -19,7 +20,7 @@ public class UsuarioModelAssembler {
 		return modelMapper.map(usuario, UsuarioOutput.class);
 	}
 	
-	public List<UsuarioOutput> toCollectionModel(List<Usuario> usuarios) {
+	public List<UsuarioOutput> toCollectionModel(Collection<Usuario> usuarios) {
 		return usuarios.stream()
 				.map(usuario -> toModel(usuario))
 				.toList();

@@ -12,36 +12,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.diniz.algafood.api.assembler.FormaPagamentoModelAssembler;
-import com.diniz.algafood.api.model.FormaPagamentoOutput;
+import com.diniz.algafood.api.assembler.UsuarioModelAssembler;
+import com.diniz.algafood.api.model.UsuarioOutput;
 import com.diniz.algafood.domain.service.CadastroRestauranteService;
 
 @RestController
-@RequestMapping("/restaurantes/{restauranteId}/formas-pagamento")
-public class RestauranteFormaPagamentoController {
+@RequestMapping("/restaurantes/{restauranteId}/responsaveis")
+public class RestauranteUsuarioResponsavelController {
 	
 	@Autowired
 	private CadastroRestauranteService cadastroRestaurante;
 	
 	@Autowired
-	private FormaPagamentoModelAssembler formaPagamentoModelAssembler;
+	private UsuarioModelAssembler usuarioModelAssembler;
 	
 	@GetMapping
-	public List<FormaPagamentoOutput> listar(@PathVariable Long restauranteId) {
+	public List<UsuarioOutput> listar(@PathVariable Long restauranteId) {
 		var restaurante = cadastroRestaurante.buscarOuFalhar(restauranteId);
 		
-		return formaPagamentoModelAssembler.toCollectionModel(restaurante.getFormasPagamento());
+		return usuarioModelAssembler.toCollectionModel(restaurante.getResponsaveis());
 	}
 	
-	@DeleteMapping("/{formaPagamentoId}")
+	@DeleteMapping("/{usuarioId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void desassociar(@PathVariable Long restauranteId, @PathVariable Long formaPagamentoId) {
-		cadastroRestaurante.desassociarFormaPagamento(restauranteId, formaPagamentoId);
+	public void desassociar(@PathVariable Long restauranteId, @PathVariable Long usuarioId) {
+		cadastroRestaurante.desassociarResponsavel(restauranteId, usuarioId);
 	}
 	
-	@PutMapping("/{formaPagamentoId}")
-	public void associar(@PathVariable Long restauranteId, @PathVariable Long formaPagamentoId) {
-		cadastroRestaurante.associarFormaPagamento(restauranteId, formaPagamentoId);
+	@PutMapping("/{usuarioId}")
+	public void associar(@PathVariable Long restauranteId, @PathVariable Long usuarioId) {
+		cadastroRestaurante.associarResponsavel(restauranteId, usuarioId);
 	}
 	
 }

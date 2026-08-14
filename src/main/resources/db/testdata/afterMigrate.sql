@@ -97,10 +97,17 @@ insert into grupo (nome) values ('Gerente'), ('Vendedor'), ('Secretária'), ('Ca
 insert into grupo_permissao (grupo_id, permissao_id)
 select 1, id from permissao;
 
-
 insert into usuario (nome, email, senha, data_cadastro) values
 ('Lesley Almeida Diniz', 'lesleydiniz@gamil.com', 'Teste123', utc_timestamp),
 ('João da Silva', 'joao.ger@algafood.com', '123', utc_timestamp),
 ('Maria Joaquina', 'maria.vnd@algafood.com', '123', utc_timestamp),
 ('José Souza', 'jose.aux@algafood.com', '123', utc_timestamp),
 ('Sebastião Martins', 'sebastiao.cad@algafood.com', '123', utc_timestamp); 
+
+insert into usuario_grupo (usuario_id, grupo_id) values (1, 1);
+insert into usuario_grupo (usuario_id, grupo_id) values (2, 5);
+insert into usuario_grupo (usuario_id, grupo_id) values (3, 3);
+insert into usuario_grupo (usuario_id, grupo_id) values (4, 2), (4, 4);
+
+
+insert into restaurante_usuario_responsavel (usuario_id, restaurante_id) values (1, 1), (1, 2), (1, 3);

@@ -33,6 +33,9 @@ public class CadastroRestauranteService {
 	private CadastroProdutoService cadastroProdutoService;
 	
 	@Autowired
+	private CadastroUsuarioService cadastroUsuarioService;
+	
+	@Autowired
 	private CadastroFormaPagamentoService cadastroFormaPagamentoService;
 	
 	public Optional<Restaurante> buscar(Long restauranteId) {
@@ -43,6 +46,27 @@ public class CadastroRestauranteService {
 		return restauranteRepository.findById(restauranteId)
 				.orElseThrow(() -> new RestauranteNaoEncontradoException(restauranteId));
 	}
+	
+	private List<Restaurante> buscarOuFalhar(List<Long> restauranteIds) {		
+		var restaurantes = restauranteRepository.findByIdIn(restauranteIds);
+		if (restaurantes.size() != restauranteIds.size()) {
+			throw new RestauranteNaoEncontradoException(getMessageRestauranteNaoEncontrado(restauranteIds, restaurantes));
+		}
+		return restaurantes;
+	}
+	
+	private String getMessageRestauranteNaoEncontrado(List<Long> restauranteIds, List<Restaurante> restaurantes) {
+		var idsEncontrados = restaurantes.stream()
+				.map(Restaurante::getId)
+				.toList();
+		
+		var idsNaoEncontrados = restauranteIds.stream()
+				.filter(id -> !idsEncontrados.contains(id))
+				.toList();
+		
+		return String.format("Restaurantes de código %s não encontrados", idsNaoEncontrados);
+	}
+	
 	
 	public List<Restaurante> listar() {
 		return restauranteRepository.findAll();
@@ -58,6 +82,19 @@ public class CadastroRestauranteService {
 	public void inativar(Long restauranteId) {
 		var restaurante = buscarOuFalhar(restauranteId);
 		restaurante.inativar();
+	}
+	
+	@Transactional
+	public void ativar(List<Long> restauranteIds) {
+		var restaurantes = buscarOuFalhar(restauranteIds);
+		restaurantes.forEach(Restaurante -> Restaurante.ativar());
+	}
+	
+
+	@Transactional
+	public void inativar(List<Long> restauranteIds) {
+		var restaurantes = buscarOuFalhar(restauranteIds);
+		restaurantes.forEach(Restaurante -> Restaurante.inativar());
 	}
 	
 	@Transactional
@@ -124,6 +161,21 @@ public class CadastroRestauranteService {
 		var restaurante = buscarOuFalhar(restauranteId);
 		produto.setRestaurante(restaurante);
 		cadastroProdutoService.salvar(produto);
+	}
+	
+
+	@Transactional
+	public void associarResponsavel(Long restauranteId, Long usuarioId) {
+		var restaurante = buscarOuFalhar(restauranteId);
+		var usuario = cadastroUsuarioService.buscarOuFalhar(usuarioId);
+		restaurante.adicionarResponsavel(usuario); 
+	}
+	
+	@Transactional
+	public void desassociarResponsavel(Long restauranteId, Long usuarioId) {
+		var restaurante = buscarOuFalhar(restauranteId);
+		var usuario = cadastroUsuarioService.buscarOuFalhar(usuarioId);
+		restaurante.removerResponsavel(usuario);
 	}
 	
 }
