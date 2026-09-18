@@ -80,9 +80,10 @@ insert into permissao (nome, descricao) values ('READ_FORMA_PAGAMENTO', 'Consult
 insert into permissao (nome, descricao) values ('WRITE_FORMA_PAGAMENTO', 'Criar|Alterar forma de pagamento');
 insert into permissao (nome, descricao) values ('REMOVE_FORMA_PAGAMENTO', 'Remover forma de pagamento');
 
-insert into restaurante (nome, taxa_frete, cozinha_id, endereco_cidade_id, endereco_bairro, endereco_cep, endereco_complemento, endereco_logradouro, endereco_numero, data_cadastro, data_atualizacao, ativo, aberto) values ('Thai Gourmet', 10, 1, 1, 'Centro', '38400-000', 'Loja 1', 'Rua 1', '100', utc_timestamp, utc_timestamp, 1, 0);
+insert into restaurante (nome, taxa_frete, cozinha_id, endereco_cidade_id, endereco_bairro, endereco_cep, endereco_complemento, endereco_logradouro, endereco_numero, data_cadastro, data_atualizacao, ativo, aberto) values ('Thai Gourmet', 10, 1, 1, 'Centro', '38400-000', 'Loja 1', 'Rua 1', '100', utc_timestamp, utc_timestamp, 1, 1);
 insert into restaurante (nome, taxa_frete, cozinha_id, endereco_cidade_id, endereco_bairro, endereco_cep, endereco_complemento, endereco_logradouro, endereco_numero, data_cadastro, data_atualizacao, ativo, aberto) values ('Thai Delivery', 9.50, 1, 1, 'Centro', '38400-000', 'Loja 2', 'Rua 2', '200', utc_timestamp, utc_timestamp, 1, 0);
 insert into restaurante (nome, taxa_frete, cozinha_id, endereco_cidade_id, endereco_bairro, endereco_cep, endereco_complemento, endereco_logradouro, endereco_numero, data_cadastro, data_atualizacao, ativo, aberto) values ('Tuk Tuk Comida Indiana', 15, 2, 2, 'Centro', '38400-000', 'Loja 3', 'Rua 3', '300', utc_timestamp, utc_timestamp, 1, 0); 
+insert into restaurante (nome, taxa_frete, cozinha_id, endereco_cidade_id, endereco_bairro, endereco_cep, endereco_complemento, endereco_logradouro, endereco_numero, data_cadastro, data_atualizacao, ativo, aberto) values ('Amburgueria Sá Menina', 15, 2, 2, 'Segismundo Pereira', '38400-000', 'Loja 34', 'Rua 32', '253', utc_timestamp, utc_timestamp, 1, 0); 
 
 insert into restaurante_forma_pagamento (restaurante_id, forma_pagamento_id) values (1, 1), (1, 2), (1, 3), (1, 4), (1, 5); 
 insert into restaurante_forma_pagamento (restaurante_id, forma_pagamento_id) values (2, 1), (2, 2), (2, 4); 
@@ -91,6 +92,9 @@ insert into restaurante_forma_pagamento (restaurante_id, forma_pagamento_id) val
 insert into produto (ativo, preco, restaurante_id, nome, descricao) values (1, 50.00, 1, 'Pad Tha', 'Tradicionalmente, é preparado com noodles de arroz, tofu ou camarão, ovo, amendoim, broto de feijão e temperado com molho de tamarindo, açúcar, molho de peixe e pimenta. Cada garfada oferece uma explosão de sabores, tornando-o uma verdadeira experiência gastronômica!');
 insert into produto (ativo, preco, restaurante_id, nome, descricao) values (1, 45.50, 1, 'Tom Yum Goong', 'Tom Yum Goong é muito mais do que uma simples sopa. É uma sinfonia de especiarias que dançam harmoniosamente para criar um perfil de sabor único');
 insert into produto (ativo, preco, restaurante_id, nome, descricao) values (1, 42.50, 1, 'Pad Kra Pao', 'É um prato tradicional tailandês que se destaca pelo uso do manjericão sagrado (holy basil), alho e pimenta');
+insert into produto (ativo, preco, restaurante_id, nome, descricao) values (1, 15.00, 1, 'Coca-cola', 'Bebida gaseificada sabor cola, conhecida mundialmente por seu sabor único e refrescante. É uma das bebidas mais populares e consumidas em todo o mundo, apreciada por pessoas de todas as idades.');
+insert into produto (ativo, preco, restaurante_id, nome, descricao) values (1, 40.00, 1, 'x-Salada', 'Sanduíche clássico que combina suculento hambúrguer de carne bovina, queijo derretido, alface fresca, tomate maduro e maionese especial, tudo entre duas fatias de pão macio. Uma explosão de sabores em cada mordida!');
+insert into produto (ativo, preco, restaurante_id, nome, descricao) values (1, 65.00, 1, 'x-tudo', 'Sanduíche completo que combina suculento hambúrguer de carne bovina, queijo derretido, alface fresca, tomate maduro, bacon crocante, ovo frito e maionese especial, tudo entre duas fatias de pão macio. Uma explosão de sabores em cada mordida!');
 
 insert into grupo (nome) values ('Gerente'), ('Vendedor'), ('Secretária'), ('Cadastrador'), ('Caixa'), ('Entregador');
 
@@ -111,3 +115,25 @@ insert into usuario_grupo (usuario_id, grupo_id) values (4, 2), (4, 4);
 
 
 insert into restaurante_usuario_responsavel (usuario_id, restaurante_id) values (1, 1), (1, 2), (1, 3);
+
+delete from item_pedido;
+delete from pedido;
+ALTER TABLE pedido AUTO_INCREMENT = 1;
+
+insert into pedido (codigo, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro, status, data_criacao, subtotal, taxa_frete, valor_total)
+values ('1bc96214-d747-44b3-8de4-02c978dee27a', 1, 1, 1, 1, '38400-000', 'Rua Floriano Peixoto', '500', 'Apto 801', 'Brasil', 'CRIADO', utc_timestamp, 298.90, 10, 308.90);
+
+insert into item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values (1, 1, 1, 78.9, 78.9, null);
+
+insert into item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values (1, 2, 2, 110, 220, 'Menos picante, por favor');
+
+
+insert into pedido (codigo, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro, status, data_criacao, subtotal, taxa_frete, valor_total)
+values ('49d0f2ca-9695-404c-8846-6bb324e90d3a', 4, 1, 2, 1, '38400-111', 'Rua Acre', '300', 'Casa 2', 'Centro', 'CRIADO', utc_timestamp, 79, 0, 79);
+
+insert into item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values (2, 6, 1, 79, 79, 'Ao ponto');
+
+
