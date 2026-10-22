@@ -3,13 +3,13 @@ package com.diniz.algafood.api.model;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
-import com.diniz.algafood.domain.model.StatusPedido;
-
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+//@JsonFilter("pedidoFilter")
+@Setter
+@Getter
 public class PedidoResumoOutput {
 	
 	@EqualsAndHashCode.Include
@@ -18,7 +18,7 @@ public class PedidoResumoOutput {
 	private BigDecimal taxaFrete;
 	private BigDecimal valorTotal;
 	private OffsetDateTime dataCriacao;
-	private StatusPedido status;
+	private String status;
 	private RestauranteResumoOutput restaurante;
 	private UsuarioOutput cliente;
 

@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +15,8 @@ import com.diniz.algafood.domain.exception.EntidadeEmUsoException;
 import com.diniz.algafood.domain.exception.PedidoNaoEncontradoException;
 import com.diniz.algafood.domain.model.Pedido;
 import com.diniz.algafood.domain.repository.PedidoRepository;
+import com.diniz.algafood.domain.repository.filter.PedidoFilter;
+import com.diniz.algafood.infrastructure.repository.spec.PedidoSpecs;
 
 @Service
 public class CadastroPedidoService {
@@ -28,6 +32,10 @@ public class CadastroPedidoService {
 	
 	public List<Pedido> listar() {
 		return pedidoRepository.findAll();
+	}
+	
+	public Page<Pedido> pesquisar(PedidoFilter filtro, Pageable pageable) {
+		return pedidoRepository.findAll(PedidoSpecs.usandoFiltro(filtro), pageable);
 	}
 	
 	@Transactional

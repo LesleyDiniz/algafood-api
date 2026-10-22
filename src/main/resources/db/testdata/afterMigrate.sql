@@ -91,9 +91,9 @@ insert into restaurante_forma_pagamento (restaurante_id, forma_pagamento_id) val
 
 insert into produto (ativo, preco, restaurante_id, nome, descricao) values (1, 50.00, 1, 'Pad Tha', 'Tradicionalmente, é preparado com noodles de arroz, tofu ou camarão, ovo, amendoim, broto de feijão e temperado com molho de tamarindo, açúcar, molho de peixe e pimenta. Cada garfada oferece uma explosão de sabores, tornando-o uma verdadeira experiência gastronômica!');
 insert into produto (ativo, preco, restaurante_id, nome, descricao) values (1, 45.50, 1, 'Tom Yum Goong', 'Tom Yum Goong é muito mais do que uma simples sopa. É uma sinfonia de especiarias que dançam harmoniosamente para criar um perfil de sabor único');
-insert into produto (ativo, preco, restaurante_id, nome, descricao) values (1, 42.50, 1, 'Pad Kra Pao', 'É um prato tradicional tailandês que se destaca pelo uso do manjericão sagrado (holy basil), alho e pimenta');
+insert into produto (ativo, preco, restaurante_id, nome, descricao) values (0, 42.50, 1, 'Pad Kra Pao', 'É um prato tradicional tailandês que se destaca pelo uso do manjericão sagrado (holy basil), alho e pimenta');
 insert into produto (ativo, preco, restaurante_id, nome, descricao) values (1, 15.00, 1, 'Coca-cola', 'Bebida gaseificada sabor cola, conhecida mundialmente por seu sabor único e refrescante. É uma das bebidas mais populares e consumidas em todo o mundo, apreciada por pessoas de todas as idades.');
-insert into produto (ativo, preco, restaurante_id, nome, descricao) values (1, 40.00, 1, 'x-Salada', 'Sanduíche clássico que combina suculento hambúrguer de carne bovina, queijo derretido, alface fresca, tomate maduro e maionese especial, tudo entre duas fatias de pão macio. Uma explosão de sabores em cada mordida!');
+insert into produto (ativo, preco, restaurante_id, nome, descricao) values (0, 40.00, 1, 'x-Salada', 'Sanduíche clássico que combina suculento hambúrguer de carne bovina, queijo derretido, alface fresca, tomate maduro e maionese especial, tudo entre duas fatias de pão macio. Uma explosão de sabores em cada mordida!');
 insert into produto (ativo, preco, restaurante_id, nome, descricao) values (1, 65.00, 1, 'x-tudo', 'Sanduíche completo que combina suculento hambúrguer de carne bovina, queijo derretido, alface fresca, tomate maduro, bacon crocante, ovo frito e maionese especial, tudo entre duas fatias de pão macio. Uma explosão de sabores em cada mordida!');
 
 insert into grupo (nome) values ('Gerente'), ('Vendedor'), ('Secretária'), ('Cadastrador'), ('Caixa'), ('Entregador');
@@ -136,4 +136,33 @@ values ('49d0f2ca-9695-404c-8846-6bb324e90d3a', 4, 1, 2, 1, '38400-111', 'Rua Ac
 insert into item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
 values (2, 6, 1, 79, 79, 'Ao ponto');
 
+insert into pedido (codigo, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro, status, data_criacao, subtotal, taxa_frete, valor_total)
+values ('7448cab1-1c5a-4c23-9be2-97d782c95601', 4, 2, 2, 1, '38400-111', 'Rua Acre', '300', 'Casa 2', 'Centro', 'CRIADO', utc_timestamp, 79, 0, 79);
+
+insert into item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values (2, 6, 1, 79, 79, 'Mal passado');
+
+insert into pedido (codigo, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro, status, data_criacao, subtotal, taxa_frete, valor_total)
+values ('63c068e7-1b96-4ccc-8f7f-b3a6bff6ec9a', 4, 2, 2, 1, '38400-111', 'Rua Acre', '300', 'Casa 2', 'Centro', 'CRIADO', utc_timestamp, 79, 0, 79);
+
+insert into item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values (2, 6, 1, 79, 79, 'Bem passado');
+
+insert into pedido (codigo, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro, status, data_criacao, subtotal, taxa_frete, valor_total)
+values ('25586a82-b310-4c23-8e95-487369f4dab4', 4, 2, 2, 1, '38400-111', 'Rua Acre', '300', 'Casa 2', 'Centro', 'CRIADO', utc_timestamp, 79, 0, 79);
+
+insert into item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values (2, 6, 1, 79, 79, 'Sem sal');
+
+insert into pedido (codigo, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro, status, data_criacao, subtotal, taxa_frete, valor_total)
+values ('53a6db0d-c784-4b46-9860-fca6236c9e9d', 4, 2, 2, 1, '38400-111', 'Rua Acre', '300', 'Casa 2', 'Centro', 'CRIADO', utc_timestamp, 79, 0, 79);
+
+insert into item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values (2, 6, 1, 79, 79, 'Marinado');
+
+insert into pedido (codigo, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro, status, data_criacao, subtotal, taxa_frete, valor_total)
+values ('77fd63a1-6a05-4f8b-b7c9-8f7a96253e4d', 4, 2, 2, 1, '38400-111', 'Rua Acre', '300', 'Casa 2', 'Centro', 'CRIADO', utc_timestamp, 79, 0, 79);
+
+insert into item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values (2, 6, 1, 79, 79, 'Com molho especial');
 

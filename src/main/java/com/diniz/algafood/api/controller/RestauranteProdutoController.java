@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.diniz.algafood.api.assembler.ProdutoInputDisassembler;
@@ -37,10 +38,14 @@ public class RestauranteProdutoController {
 	private ProdutoInputDisassembler produtoInputDisassembler;
 	
 	@GetMapping
-	public List<ProdutoOutput> listar(@PathVariable Long restauranteId) {
+	public List<ProdutoOutput> listar(@PathVariable Long restauranteId, @RequestParam(required = false) Boolean incluirInativos) {
 		var restaurante = cadastroRestaurante.buscarOuFalhar(restauranteId);
 		
-		return produtoModelAssembler.toCollectionModel(cadastroProduto.listarPorRestaurante(restaurante));
+		var resultado = (incluirInativos != null && incluirInativos) 
+				? cadastroProduto.findTodosByRestaurante(restaurante) 
+				: cadastroProduto.findByRestaurante(restaurante);
+		
+		return produtoModelAssembler.toCollectionModel(resultado);
 	}
 	
 	@GetMapping("/{produtoId}")

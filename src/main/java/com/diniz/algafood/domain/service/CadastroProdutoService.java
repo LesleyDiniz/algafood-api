@@ -36,7 +36,11 @@ public class CadastroProdutoService {
 		return produtoRepository.findAll();
 	}
 	
-	public List<Produto> listarPorRestaurante(Restaurante restaurante) {
+	public List<Produto> findByRestaurante(Restaurante restaurante) {
+		return produtoRepository.findAtivosByRestaurante(restaurante);
+	}
+	
+	public List<Produto> findTodosByRestaurante(Restaurante restaurante) {
 		return produtoRepository.findByRestaurante(restaurante);
 	}
 	

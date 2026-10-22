@@ -3,6 +3,9 @@ package com.diniz.algafood.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +21,7 @@ import com.diniz.algafood.api.assembler.CozinhaInputDisassembler;
 import com.diniz.algafood.api.assembler.CozinhaModelAssembler;
 import com.diniz.algafood.api.model.CozinhaOutput;
 import com.diniz.algafood.api.model.input.CozinhaInput;
+import com.diniz.algafood.domain.model.Cozinha;
 import com.diniz.algafood.domain.service.CadastroCozinhaService;
 
 import jakarta.validation.Valid;
@@ -36,8 +40,12 @@ public class CozinhaController {
 	private CozinhaInputDisassembler cozinhaInputDisassembler;
 	
 	@GetMapping
-	public List<CozinhaOutput> listar() {
-		return cozinhaModelAssembler.toCollectionModel(cadastroCozinha.listar());
+	public Page<CozinhaOutput> listar(Pageable pageable) {
+		Page<Cozinha> cozinhasPage = cadastroCozinha.listar(pageable);
+		
+		List<CozinhaOutput> listaCozinhas = cozinhaModelAssembler.toCollectionModel(cozinhasPage.getContent());
+		
+		return new PageImpl<>(listaCozinhas, pageable, cozinhasPage.getTotalElements());
 	}
 		
 	@GetMapping("/{cozinhaId}")
